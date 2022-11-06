@@ -26,4 +26,5 @@ ye javabe dg : R=0  L=1  E=2  M=4  O=5  A=6  X=7  T=8
 ------   =>   ------
 later         16820
 
-# To run, go to `checkWords.js` and change the variable `words` in line 62.
+# To run
+Go to `checkWords.js` and change the variable `words` in line 62.
