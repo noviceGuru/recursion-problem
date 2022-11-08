@@ -9,16 +9,13 @@ const breakAndCheckWords = words => {
 
     // codificate with chars
     let charIndexs = brokenWords.map(e => e.map(i => chars.findIndex(el => el === i)))
-
     if (chars.length > 10) {
         console.log('too many characters')
         return
     }
 
     let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-    let combinations = calculateUniqueCombinations(numbers, chars.length)
-
+    let {combinations, number} = calculateUniqueCombinations(numbers, chars.length)
     let correctCombinations = []
 
     combinations.forEach(e => {
@@ -32,34 +29,39 @@ const breakAndCheckWords = words => {
         if (parseInt(firstWord) + parseInt(secondWord) === parseInt(thirdWord)) correctCombinations.push(e)
     })
 
-    console.log('Checked ', combinations.length, ' combinations.')
-    console.log('Found ', correctCombinations.length, !!correctCombinations.length? ' answers:' : 'answers.')
-    if(!!correctCombinations.length) console.log(correctCombinations.map(e => e.map((el, index) => `${chars[index]} = ${el}`)))
+    console.log('Checked ', number, ' combinations.')
+    console.log('Found ', correctCombinations.length, !!correctCombinations.length ? ' answers:' : 'answers.')
+    if (!!correctCombinations.length) console.log(correctCombinations.map(e => e.map((el, index) => `${chars[index]} = ${el}`)))
 }
 
 const calculateUniqueCombinations = (choices, itemsLength) => {
     let combinations = []
     let items = new Array(itemsLength).fill(choices[0])
-
-    const iterate = (choices, items, index) => {
-        if (index !== (items.length)) {
+    let number = 0
+    const recurse = (choices, items, index) => {
+        console.log('choices ',choices)
+        console.log(`${number}th combination`)
+        if (index !== (items.length) && !!choices.length) {
             for (let i = 0; i < choices.length; i++) {
                 items[index] = choices[i]
-                iterate(choices, items, index + 1)
+                number++
+                let toSplice = [...choices]
+                toSplice.splice(i, 1)
+                recurse(toSplice, items, index + 1)
             }
-        } else if ((new Set([...items]).size === itemsLength)) {
-            combinations.push([...items])
+        } else if ((new Set([...items]).size === itemsLength) && !!choices.length) {
+            combinations.push([...items], choices[i])
         } else {
-            // console.log('skip')
+            console.log('skip')
         }
     }
 
-    iterate(choices, items, 0)
+    recurse(choices, items, 0)
 
-    return combinations
+    return {combinations, number}
 }
 
-let words = ['text', 'tome', 'later']
+let words = ['javab', 'mideh', 'nana']
 
 
 breakAndCheckWords(words)
