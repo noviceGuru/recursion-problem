@@ -29,7 +29,7 @@ const breakAndCheckWords = words => {
         if (parseInt(firstWord) + parseInt(secondWord) === parseInt(thirdWord)) correctCombinations.push(e)
     })
 
-    console.log('Checked ', number, ' combinations.')
+    console.log('Checked ', combinations.length, ' combinations.')
     console.log('Found ', correctCombinations.length, !!correctCombinations.length ? ' answers:' : 'answers.')
     if (!!correctCombinations.length) console.log(correctCombinations.map(e => e.map((el, index) => `${chars[index]} = ${el}`)))
 }
@@ -49,8 +49,8 @@ const calculateUniqueCombinations = (choices, itemsLength) => {
                 toSplice.splice(i, 1)
                 recurse(toSplice, items, index + 1)
             }
-        } else if ((new Set([...items]).size === itemsLength) && !!choices.length) {
-            combinations.push([...items], choices[i])
+        } else if ((new Set([...items]).size === itemsLength)) {
+            combinations.push([...items])
         } else {
             console.log('skip')
         }
